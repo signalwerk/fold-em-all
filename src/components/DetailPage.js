@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { graphql, compose } from 'react-apollo'
-import { withRouter } from 'react-router-dom'
-import  { gql } from 'apollo-boost'
+import { Link, withRouter } from 'react-router-dom'
+import { gql } from 'apollo-boost'
 
 class DetailPage extends Component {
   render() {
@@ -22,6 +22,10 @@ class DetailPage extends Component {
         <h1 className="f3 black-80 fw4 lh-solid">{post.title}</h1>
         <p className="black-80 fw3">{post.text}</p>
         {action}
+
+        <div>
+          <Link to={`/post/edit/${post.id}`}>Bearbeiten</Link>
+        </div>
       </Fragment>
     )
   }
@@ -35,24 +39,10 @@ class DetailPage extends Component {
             onClick={() => this.publishDraft(id)}
           >
             Publish
-          </a>{' '}
-          <a
-            className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-            onClick={() => this.deletePost(id)}
-          >
-            Delete
           </a>
         </Fragment>
       )
     }
-    return (
-      <a
-        className="f6 dim br1 ba ph3 pv2 mb2 dib black pointer"
-        onClick={() => this.deletePost(id)}
-      >
-        Delete
-      </a>
-    )
   }
 
   deletePost = async id => {

@@ -1,0 +1,30 @@
+.button--root a {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1rem;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box;
+
+  border-radius: .125rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  background-color: rgba( 255, 255, 255, .3 );
+  /* cursor: pointer; */
+}
+
+.button--root a.button:hover {
+  background-color: rgba( 0, 0, 0, .1 );
+}
+
+.button--root a.floatRight {
+  float: right;
+}
+
+.button--root a.floatRight:after {
+  content: "";
+  display: table;
+  clear: both;
+}

@@ -1,0 +1,27 @@
+.events--root {
+  height: 100%;
+}
+
+.events--header {
+  height: 5rem;
+}
+
+.events--content {
+  height: calc(100% - 5rem);
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.events--link {
+  display: block;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-bottom: 1px solid black;
+
+}
+.events--link.active {
+  border-left: 0.35rem solid red;
+  padding-left: 0.4rem;
+
+  background-color: rgba(0, 0, 0, 0.15);
+}

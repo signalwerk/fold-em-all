@@ -10,9 +10,10 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createDraft(title: String!, text: String!): Post!
-  publish(id: ID!): Post!
+  createPost(title: String!, text: String!, isPublished: Boolean!): Post!
   deletePost(id: ID!): Post!
+  updatePost(id: ID!, title: String!, text: String!, isPublished: Boolean!): Post!
+
 }
 
 type Subscription {

@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
-import Post from '../components/Post'
+import PostTeasers from '../PostTeasers'
 import { graphql } from 'react-apollo'
-import  { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost'
 
-class FeedPage extends Component {
+class Home extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.key !== nextProps.location.key) {
       this.props.feedQuery.refetch()
@@ -25,17 +25,8 @@ class FeedPage extends Component {
 
     return (
       <Fragment>
-        <h1>Feed</h1>
-        {this.props.feedQuery.feed &&
-          this.props.feedQuery.feed.map(post => (
-            <Post
-              key={post.id}
-              post={post}
-              refresh={() => this.props.feedQuery.refetch()}
-              isDraft={!post.isPublished}
-            />
-          ))}
-        {this.props.children}
+        <h1>Posts – sh</h1>
+        <PostTeasers posts={this.props.feedQuery.feed} />
       </Fragment>
     )
   }
@@ -95,4 +86,4 @@ export default graphql(FEED_QUERY, {
         })
       },
     }),
-})(FeedPage)
+})(Home)

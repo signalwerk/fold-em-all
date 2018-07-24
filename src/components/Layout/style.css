@@ -1,0 +1,29 @@
+.layout--root {
+  margin: 0 auto;
+  width: 96%;
+  max-width: 1200px;
+}
+
+.layout--nav {
+  width: 100%;
+  height: 5rem;
+  border-bottom: 1px solid black;
+}
+.layout--content {
+  width: 100%;
+  height: calc(100vh - 5rem);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.layout--list {
+  width: 35%;
+  height: 100%;
+}
+
+.layout--detail {
+  width: 60%;
+
+}

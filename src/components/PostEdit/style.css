@@ -1,0 +1,19 @@
+.eventedit--content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.eventedit--date {
+  width: 45%;
+}
+
+.eventedit--text {
+  width: 45%;
+}
+
+
+.eventedit--text textarea.textarea {
+    /* resize: none; */
+    height: 17rem;
+}

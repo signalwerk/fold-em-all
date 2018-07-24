@@ -7,9 +7,10 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
-import FeedPage from './FeedPage'
+import Home from './Home'
 import DraftsPage from './DraftsPage'
-import CreatePage from './CreatePage'
+import PostCreate from './PostCreate'
+import PostEditPage from './PostEditPage'
 import DetailPage from './DetailPage'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
@@ -19,7 +20,7 @@ import Alex from './Alex'
 import { AUTH_TOKEN } from '../constant'
 import { isTokenExpired } from '../helper/jwtHelper'
 import { graphql } from 'react-apollo'
-import  { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost'
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
@@ -89,23 +90,18 @@ class RootContainer extends Component {
   renderNavBar() {
     return (
       <nav className="pa3 pa4-ns">
-        <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Feed">
-          Blog
+        <Link className="link dim black b f6 f5-ns dib mr3" to="/" title="Home">
+          Home
         </Link>
 
-        <Link className="link dim black b f6 f5-ns dib mr3" to="/alex" title="alex">
+        <Link
+          className="link dim black b f6 f5-ns dib mr3"
+          to="/alex"
+          title="alex"
+        >
           Alex
         </Link>
 
-        <NavLink
-          className="link dim f6 f5-ns dib mr3 black"
-          activeClassName="gray"
-          exact={true}
-          to="/"
-          title="Feed"
-        >
-          Feed
-        </NavLink>
         {this.props.data &&
           this.props.data.me &&
           this.props.data.me.email &&
@@ -117,7 +113,7 @@ class RootContainer extends Component {
               to="/drafts"
               title="Drafts"
             >
-              Drafts
+              My Posts
             </NavLink>
           )}
         {this.state.token ? (
@@ -146,10 +142,10 @@ class RootContainer extends Component {
           this.props.data.me.email &&
           this.state.token && (
             <Link
-              to="/create"
+              to="/post/create"
               className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
             >
-              + Create Draft
+              + Create Post
             </Link>
           )}
       </nav>
@@ -160,11 +156,8 @@ class RootContainer extends Component {
     return (
       <div className="fl w-100 pl4 pr4">
         <Switch>
-          <Route exact path="/" component={FeedPage} />
-          <Route
-            path="/alex"
-            component={Alex}
-          />
+          <Route exact path="/" component={Home} />
+          <Route path="/alex" component={Alex} />
           <ProtectedRoute
             token={this.state.token}
             path="/drafts"
@@ -172,8 +165,13 @@ class RootContainer extends Component {
           />
           <ProtectedRoute
             token={this.state.token}
-            path="/create"
-            component={CreatePage}
+            path="/post/edit/:id"
+            component={PostEditPage}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/post/create"
+            component={PostCreate}
           />
           <Route path="/post/:id" component={DetailPage} />
           <Route

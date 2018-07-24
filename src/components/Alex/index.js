@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Editor } from 'slate-react'
 import { Value } from 'slate'
+import './index.css'
 
 const initialValue = Value.fromJSON({
   document: {
@@ -34,11 +35,23 @@ export default class Alex extends Component {
     this.setState({ value })
   }
 
+  onKeyDown = (event, change) => {
+    console.log(event.key)
+
+    if (event.key !== '&') return
+
+    event.preventDefault()
+    change.insertText('and')
+    return true
+  }
+
   render() {
       return (
-        <Fragment>
-          <Editor value={this.state.value} onChange={this.onChange} />
-        </Fragment>
+        <Editor
+          className="Editor"
+          value={this.state.value}
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown} />
       )
   }
 }

@@ -1,55 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Editor } from 'slate-react'
-import { Value } from 'slate'
+
 import './index.css'
+import initialValue from './initialValue'
+import { Toolbar, Button, Icon, Image, CodeNode } from './components'
 
-const CodeNode = ({ attributes, children }) =>
-  <pre {...attributes}>
-      <code>{children}</code>
-  </pre>
+import hotkeys from './hotkeys'
 
-const BoldMark = ({ children }) => <strong>{children}</strong>
+function insertImage(change, src, target) {
+  if (target) {
+    change.select(target)
+  }
 
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: 'block',
-        type: 'paragraph',
-        nodes: [
-          {
-            object: 'text',
-            leaves: [
-              {
-                text: 'A line of text in a paragraph.',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-})
+  change.insertBlock({
+    type: 'image',
+    isVoid: true,
+    data: { src },
+  })
+}
+
+const plugins = [
+  ...hotkeys
+]
 
 export default class Alex extends Component {
-  // Set the initial value when the app is first constructed.
   state = {
     value: initialValue,
   }
 
-  // On change, update the app's React state with the new editor value.
   onChange = ({ value }) => {
     this.setState({ value })
   }
 
   onKeyDown = (event, change) => {
     if (!event.ctrlKey) return
-    switch(event.key) {
-      case 'b': {
-        event.preventDefault()
-        change.toggleMark('bold')
-        return true
-      }
+    switch (event.key) {
       case 'c': {
         const isCode = change.value.blocks.some(block => block.type === 'code')
         event.preventDefault()
@@ -63,22 +48,48 @@ export default class Alex extends Component {
 
   }
 
+  onClickImage = event => {
+    event.preventDefault()
+    const src = window.prompt('Enter the URL of the image:')
+    if (!src) return
+
+    const change = this.state.value.change().call(insertImage, src)
+
+    this.onChange(change)
+  }
+
   render() {
-      return (
+    return (
+      <Fragment>
+        <Toolbar>
+          <Button onMouseDown={this.onClickImage}>
+            <Icon>Image</Icon>
+          </Button>
+        </Toolbar>
         <Editor
           className="Editor"
+          plugins={plugins}
+          placeholder="Enter some text..."
           value={this.state.value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           renderNode={this.renderNode}
           renderMark={this.renderMark} />
-      )
+      </Fragment>
+    )
   }
 
   renderNode = props => {
-    switch (props.node.type) {
-      case 'code':
-        return <CodeNode {...props}/>
+    const { attributes, node, isFocused } = props
+
+    switch (node.type) {
+      case 'code': {
+        return <CodeNode {...props} />
+      }
+      case 'image': {
+        const src = props.node.data.get('src')
+        return <Image src={src} selected={isFocused} {...attributes} />
+      }
       default:
         break
     }
@@ -87,7 +98,11 @@ export default class Alex extends Component {
   renderMark = props => {
     switch (props.mark.type) {
       case 'bold':
-        return <BoldMark {...props}/>
+        return <strong>{props.children}</strong>
+      case 'italic':
+        return <em>{props.children}</em>
+      case 'underline':
+        return <u>{props.children}</u>
       default:
         break
     }

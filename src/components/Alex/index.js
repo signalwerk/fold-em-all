@@ -32,22 +32,6 @@ export default class Alex extends Component {
     this.setState({ value })
   }
 
-  onKeyDown = (event, change) => {
-    if (!event.ctrlKey) return
-    switch (event.key) {
-      case 'c': {
-        const isCode = change.value.blocks.some(block => block.type === 'code')
-        event.preventDefault()
-        change.setBlocks(isCode ? 'paragraph' : 'code')
-        return true
-      }
-      default:
-        break
-    }
-
-
-  }
-
   onClickImage = event => {
     event.preventDefault()
     const src = window.prompt('Enter the URL of the image:')
@@ -86,6 +70,9 @@ export default class Alex extends Component {
       case 'code': {
         return <CodeNode {...props} />
       }
+      case 'title': {
+        return <h1>{props.children}</h1>
+      }
       case 'image': {
         const src = props.node.data.get('src')
         return <Image src={src} selected={isFocused} {...attributes} />
@@ -95,16 +82,16 @@ export default class Alex extends Component {
     }
   }
 
-  renderMark = props => {
-    switch (props.mark.type) {
-      case 'bold':
-        return <strong>{props.children}</strong>
-      case 'italic':
-        return <em>{props.children}</em>
-      case 'underline':
-        return <u>{props.children}</u>
-      default:
-        break
-    }
+  renderMark = props => <MarkSwitch {...props} />
+}
+
+const MarkSwitch = props => {
+  switch (props.mark.type) {
+    case 'bold':
+      return <strong>{props.children}</strong>
+    case 'negative':
+      return <span className="mark-negative">{props.children}</span>
+    default:
+      break
   }
 }

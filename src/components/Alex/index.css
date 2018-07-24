@@ -4,5 +4,19 @@
 }
 
 code {
-  color: red;
+  display: block;
+  color: white;
+  background-color: black;
+  font: inherit;
+  font-family: monospace;
+}
+
+.mark-negative {
+  display: inline-block;
+  color: white;
+  font-weight: normal;
+  background-color: black;
+  min-width: 1em;
+  text-align: center;
+  padding: 0 0.2em;
 }

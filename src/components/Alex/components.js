@@ -71,7 +71,7 @@ export class CanvasImage extends React.Component {
   render() {
     return (
       <div style={{ outline: '1px solid red'}}>
-        <img ref="image" onLoad={this.onImageLoad} src={this.props.src} alt="" style={{ display: 'none'}} />
+        <img ref="image" onLoad={this.onImageLoad} src={this.props.src} alt="" />
         <canvas ref="canvas" width={this.width} height={this.height} />
       </div>
     )

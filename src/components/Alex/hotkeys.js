@@ -36,7 +36,7 @@ export const NodeSwitch = props => {
   return {
     code: <CodeNode {...props} />,
     title: <h1>{children}</h1>,
-    image: <CanvasImage src={src} selected={isFocused} {...attributes} />
+    image: <Image src={src} selected={isFocused} {...attributes} />
   }[node.type] || <p {...props} />
 }
 

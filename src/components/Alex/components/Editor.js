@@ -21,7 +21,7 @@ export default class Editor extends Component {
 
   onDropOrPaste = (event, change, editor) => {
     const target = getEventRange(event, change.value)
-    if (!target && event.type == 'drop') return
+    if (!target && event.type === 'drop') return
 
     const transfer = getEventTransfer(event)
     const { type, text, files } = transfer
@@ -30,7 +30,7 @@ export default class Editor extends Component {
       for (const file of files) {
         const reader = new FileReader()
         const [mime] = file.type.split('/')
-        if (mime != 'image') continue
+        if (mime !== 'image') continue
 
         reader.addEventListener('load', () => {
           editor.change(c => {
@@ -72,27 +72,49 @@ export default class Editor extends Component {
   renderNode = props => <NodeSwitch {...props} />
   renderMark = props => <MarkSwitch {...props} />
 
-  render() {
+  renderToolbar = () => {
     return (
-      <div>
-        <Toolbar actions={[
-          { icon: 'title',         action: this.toggleBlock(toggleTitle) },
-          { icon: 'code',          action: this.toggleBlock(toggleCode) },
-          { icon: 'image',         action: this.onClickImage },
-          { icon: 'format_italic', action: this.toggleMark('italic') },
-          { icon: 'invert_colors', action: this.toggleMark('negative') },
-        ]} />
+      <Toolbar actions={[
+        { icon: 'title', action: this.toggleBlock(toggleTitle) },
+        { icon: 'code', action: this.toggleBlock(toggleCode) },
+        { icon: 'image', action: this.onClickImage },
+        { icon: 'format_italic', action: this.toggleMark('italic') },
+        { icon: 'invert_colors', action: this.toggleMark('negative') },
+      ]} />
+    )
+  }
+
+  renderEditor = () => {
+    const { active } = this.state
+    return (
         <SlateEditor
           className="Editor"
           plugins={hotkeys}
           placeholder="Enter some text..."
           value={this.state.value}
+          autoFocus={false}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           onDrop={this.onDropOrPaste}
           onPaste={this.onDropOrPaste}
+          readOnly={!this.props.active}
           renderNode={this.renderNode}
           renderMark={this.renderMark} />
+      )
+  }
+
+  render() {
+    const className = `Editor__wrapper${
+      this.props.active
+        ? ' Editor__wrapper--active'
+        : ''}`
+
+    return (
+      <div
+
+        className={className} >
+        {this.renderToolbar()}
+        {this.renderEditor()}
       </div>
     )
   }

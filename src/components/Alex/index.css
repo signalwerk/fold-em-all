@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 .Editor {
   border: 1px solid black;
   border-radius: 2px;
@@ -23,4 +25,11 @@ code {
 
 canvas {
   width: 100%;
+}
+
+.separator {
+  height: 2em;
+  width: 2px;
+  background: #ddd;
+  transform: translateY(33%);
 }

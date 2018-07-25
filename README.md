@@ -10,5 +10,6 @@
 5. Open browser: http://localhost:3000
 
 ## Database
+* `npx prisma deploy` → deploy new schema
 * `npx prisma seed` → seed Database
 * `npx prisma seed --reset` → all data is deleted before executing the seed

@@ -6,16 +6,16 @@ import { gql } from 'apollo-boost'
 class Home extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.key !== nextProps.location.key) {
-      this.props.feedQuery.refetch()
+      this.props.postsQuery.refetch()
     }
   }
 
   componentDidMount() {
-    this.props.subscribeToNewFeed()
+    this.props.subscribeToNewPosts()
   }
 
   render() {
-    if (this.props.feedQuery.loading) {
+    if (this.props.postsQuery.loading) {
       return (
         <div className="flex w-100 h-100 items-center justify-center pt7">
           <div>Loading (from {process.env.REACT_APP_GRAPHQL_ENDPOINT})</div>
@@ -26,15 +26,15 @@ class Home extends Component {
     return (
       <Fragment>
         <h1>Posts – sh</h1>
-        <PostTeasers posts={this.props.feedQuery.feed} />
+        <PostTeasers posts={this.props.postsQuery.posts} />
       </Fragment>
     )
   }
 }
 
-const FEED_QUERY = gql`
-  query FeedQuery {
-    feed {
+const POSTS_QUERY = gql`
+  query PostsQuery {
+    posts {
       id
       text
       title
@@ -45,9 +45,9 @@ const FEED_QUERY = gql`
     }
   }
 `
-const FEED_SUBSCRIPTION = gql`
-  subscription FeedSubscription {
-    feedSubscription {
+const POSTS_SUBSCRIPTION = gql`
+  subscription PostsSubscription {
+    postsSubscription {
       node {
         id
         text
@@ -61,26 +61,26 @@ const FEED_SUBSCRIPTION = gql`
   }
 `
 
-export default graphql(FEED_QUERY, {
-  name: 'feedQuery', // name of the injected prop: this.props.feedQuery...
+export default graphql(POSTS_QUERY, {
+  name: 'postsQuery', // name of the injected prop: this.props.postsQuery...
   options: {
     fetchPolicy: 'network-only',
   },
   props: props =>
     Object.assign({}, props, {
-      subscribeToNewFeed: params => {
-        return props.feedQuery.subscribeToMore({
-          document: FEED_SUBSCRIPTION,
+      subscribeToNewPosts: params => {
+        return props.postsQuery.subscribeToMore({
+          document: POSTS_SUBSCRIPTION,
           updateQuery: (prev, { subscriptionData }) => {
             if (!subscriptionData.data) {
               return prev
             }
-            const newPost = subscriptionData.data.feedSubscription.node
-            if (prev.feed.find(post => post.id === newPost.id)) {
+            const newPost = subscriptionData.data.postsSubscription.node
+            if (prev.posts.find(post => post.id === newPost.id)) {
               return prev
             }
             return Object.assign({}, prev, {
-              feed: [...prev.feed, newPost],
+              posts: [...prev.posts, newPost],
             })
           },
         })

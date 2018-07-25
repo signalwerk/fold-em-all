@@ -17,7 +17,12 @@ export default ({ actions }) => {
     <Toolbar>
       {actions.map(({ icon, action}) => (
         <Button onMouseDown={action}>
-          <Icon>{icon}</Icon>
+          {
+            icon === 'separator'
+            ? <div className="separator"></div>
+            : <Icon>{icon}</Icon>
+          }
+
         </Button>
       ))}
     </Toolbar>

@@ -1,19 +1,23 @@
 import { Editor as SlateEditor, getEventRange, getEventTransfer } from 'slate-react'
-import { Block, Value } from 'slate'
-import { LAST_CHILD_TYPE_INVALID } from 'slate-schema-violations'
-
-import React, { Component, Fragment } from 'react'
+import SoftBreak from 'slate-soft-break'
+import React, { Component } from 'react'
 import isUrl from 'is-url'
-import initialValue from '../initialValue'
-import '../index.css'
 import { hotkeys, NodeSwitch, MarkSwitch } from '../hotkeys'
 import { insertImage, toggleTitle, toggleCode } from '../changes'
 import { isImage } from '../helpers'
 import Toolbar from './Toolbar'
+import './Editor.css'
+
+const plugins = [
+  ...hotkeys,
+  SoftBreak({
+    onlyIn: ['code']
+  })
+]
 
 export default class Editor extends Component {
   state = {
-    value: initialValue,
+    value: this.props.value,
   }
 
   onChange = ({ value }) => {
@@ -22,7 +26,7 @@ export default class Editor extends Component {
 
   onDropOrPaste = (event, change, editor) => {
     const target = getEventRange(event, change.value)
-    if (!target && event.type == 'drop') return
+    if (!target && event.type === 'drop') return
 
     const transfer = getEventTransfer(event)
     const { type, text, files } = transfer
@@ -31,7 +35,7 @@ export default class Editor extends Component {
       for (const file of files) {
         const reader = new FileReader()
         const [mime] = file.type.split('/')
-        if (mime != 'image') continue
+        if (mime !== 'image') continue
 
         reader.addEventListener('load', () => {
           editor.change(c => {
@@ -54,9 +58,7 @@ export default class Editor extends Component {
     event.preventDefault()
     const src = window.prompt('Enter the URL of the image:')
     if (!src) return
-
     const change = this.state.value.change().call(insertImage, src)
-
     this.onChange(change)
   }
 
@@ -72,46 +74,57 @@ export default class Editor extends Component {
     this.onChange(change)
   }
 
+  onDoneClicked = event => {
+    this.props.onDoneCallback()
+  }
+
   renderNode = props => <NodeSwitch {...props} />
   renderMark = props => <MarkSwitch {...props} />
 
-  render() {
+  renderToolbar = () => {
     return (
-      <Fragment>
-        <Toolbar actions={[
-          {
-            icon: 'title',
-            action: this.toggleBlock(toggleTitle)
-          },
-          {
-            icon: 'code',
-            action: this.toggleBlock(toggleCode)
-          },
-          {
-            icon: 'image',
-            action: this.onClickImage
-          },
-          {
-            icon: 'format_italic',
-            action: this.toggleMark('italic')
-          },
-          {
-            icon: 'invert_colors',
-            action: this.toggleMark('negative')
-          },
-        ]} />
+      <Toolbar actions={[
+        { icon: 'title', action: this.toggleBlock(toggleTitle) },
+        { icon: 'code', action: this.toggleBlock(toggleCode) },
+        { icon: 'image', action: this.onClickImage },
+        { icon: 'spacer', action: undefined },
+        { icon: 'format_italic', action: this.toggleMark('italic') },
+        { icon: 'invert_colors', action: this.toggleMark('negative') },
+        { icon: 'spacer', action: undefined },
+        { icon: 'done', action: this.onDoneClicked },
+      ]} />
+    )
+  }
+
+  renderEditor = () => {
+    return (
         <SlateEditor
           className="Editor"
-          plugins={hotkeys}
+          plugins={plugins}
           placeholder="Enter some text..."
           value={this.state.value}
+          autoFocus={false}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           onDrop={this.onDropOrPaste}
           onPaste={this.onDropOrPaste}
+          readOnly={!this.props.active}
           renderNode={this.renderNode}
           renderMark={this.renderMark} />
-      </Fragment>
+      )
+  }
+
+  render() {
+    const className = `Editor__wrapper${
+      this.props.active
+        ? ' Editor__wrapper--active'
+        : ''}`
+
+    return (
+      <div className={className} >
+        {this.renderToolbar()}
+        {this.renderEditor()}
+      </div>
     )
   }
 }

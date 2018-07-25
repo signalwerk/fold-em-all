@@ -1,0 +1,119 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+.Post__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Post__section {
+  flex: 0 0 50%;
+  height: 30rem;
+}
+
+.Post__section:first-of-type {
+  margin-left: 50%;
+}
+
+.Post__section:hover {
+  background-color: #ddf;
+}
+
+
+.Editor__wrapper {
+  z-index: 1;
+  position: relative;
+  height: 100%;
+}
+
+.Editor__wrapper--active {
+  color: black;
+}
+
+.Editor {
+  z-index: 1;
+  background-color: white;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  color: inherit;
+  overflow-y: scroll;
+}
+
+.Editor:hover {
+  background-color: #aaf;
+}
+
+.Toolbar {
+  position: absolute;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 100%;
+  transform: translateX(-100%);
+  transition: transform 200ms ease;
+}
+
+.Toolbar__spacer {
+  flex: 1 0 auto;
+}
+
+.Post__section--active .Toolbar {
+  transform: translateX(0);
+}
+
+
+.Post__section:nth-of-type(2n) .Toolbar {
+  left: unset;
+  right: 100%;
+  transform: translateX(100%);
+}
+
+.Post__section:nth-of-type(2n).Post__section--active .Toolbar {
+  transform: translateX(0);
+}
+
+.Image {
+  display: block;
+  max-width: 100%;
+  max-height: 20em;
+  filter: grayscale(100%) brightness(90%) contrast(256%);
+}
+
+.Image__wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.Image__overlay {
+  /* position: absolute;
+  top: 0;right: 0;bottom: 0;left: 0;
+  background-image:
+    linear-gradient(white 1px, transparent 1px),
+    linear-gradient(90deg, white 1px, transparent 1px);
+  background-size: 2px 2px; */
+}
+
+code {
+  display: inline-block;
+  color: white;
+  background-color: black;
+  font-family: monospace;
+  width: 100%;
+}
+
+.mark-negative {
+  display: inline-block;
+  color: white;
+  font-weight: normal;
+  background-color: black;
+  min-width: 1em;
+  text-align: center;
+  padding: 0 0.2em;
+}
+
+canvas {
+  width: 100%;
+}
+

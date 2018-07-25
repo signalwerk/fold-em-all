@@ -38,7 +38,7 @@ export const NodeSwitch = props => {
     code: <CodeNode {...props} />,
     heading: <h1>{children}</h1>,
     image: <Image src={src} selected={isFocused} {...attributes} />
-  }[node.type] || <p {...props} />
+  }[node.type] || <p>{children}</p>
 }
 
 export const MarkSwitch = props => {

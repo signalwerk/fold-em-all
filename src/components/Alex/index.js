@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import Editor from './components/Editor'
+import initialValue from './initialValue'
 
 export default class Alex extends Component {
 
@@ -7,13 +8,7 @@ export default class Alex extends Component {
     return (
       <Fragment >
         <Editor
-          value={this.props.value}
-          onBlur={json =>
-            this.store(json)
-          }
-          saveImage={(base64, cb) =>
-            this.save(base64, cb)
-          }
+          value={initialValue}
         />
       </Fragment >
     )

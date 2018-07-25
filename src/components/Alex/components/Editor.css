@@ -36,7 +36,9 @@
   background-color: white;
   position: relative;
   height: 100%;
+  width: 100%;
   color: inherit;
+  overflow-y: scroll;
 }
 
 .Editor:hover {
@@ -73,13 +75,19 @@
   transform: translateX(0);
 }
 
+.Image {
+  display: block;
+  max-width: 100%;
+  max-height: 20em;
+  filter: grayscale(100%) contrast(256%) brightness(100%);
+}
 
 code {
   display: inline-block;
   color: white;
   background-color: black;
-  font: inherit;
   font-family: monospace;
+  width: 100%;
 }
 
 .mark-negative {
@@ -96,9 +104,3 @@ canvas {
   width: 100%;
 }
 
-.separator {
-  height: 2em;
-  width: 2px;
-  background: #ddd;
-  transform: translateY(33%);
-}

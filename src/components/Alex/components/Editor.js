@@ -1,7 +1,5 @@
 import { Editor as SlateEditor, getEventRange, getEventTransfer } from 'slate-react'
-import { Block, Value } from 'slate'
-import { LAST_CHILD_TYPE_INVALID } from 'slate-schema-violations'
-
+import SoftBreak from 'slate-soft-break'
 import React, { Component } from 'react'
 import isUrl from 'is-url'
 import { hotkeys, NodeSwitch, MarkSwitch } from '../hotkeys'
@@ -9,6 +7,13 @@ import { insertImage, toggleTitle, toggleCode } from '../changes'
 import { isImage } from '../helpers'
 import Toolbar from './Toolbar'
 import './Editor.css'
+
+const plugins = [
+  ...hotkeys,
+  SoftBreak({
+    onlyIn: ['code']
+  })
+]
 
 export default class Editor extends Component {
   state = {
@@ -86,11 +91,10 @@ export default class Editor extends Component {
   }
 
   renderEditor = () => {
-    const { active } = this.state
     return (
         <SlateEditor
           className="Editor"
-          plugins={hotkeys}
+          plugins={plugins}
           placeholder="Enter some text..."
           value={this.state.value}
           autoFocus={false}
@@ -111,9 +115,7 @@ export default class Editor extends Component {
         : ''}`
 
     return (
-      <div
-
-        className={className} >
+      <div className={className} >
         {this.renderToolbar()}
         {this.renderEditor()}
       </div>

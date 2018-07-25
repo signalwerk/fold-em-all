@@ -44,3 +44,36 @@ export const CodeNode = ({ attributes, children }) =>
   <pre {...attributes}>
     <code>{children}</code>
   </pre>
+
+export class CanvasImage extends React.Component {
+  componentDidMount() {
+    this.updateCanvas()
+  }
+
+  componentDidUpdate() {
+    this.updateCanvas()
+  }
+
+  updateCanvas() {
+    const canvas = this.refs.canvas
+    const ctx = canvas.getContext('2d')
+    const img = this.refs.image
+
+    img.onload = () => {
+      this.width = img.width
+      this.height = img.height
+      canvas.width = this.width
+      canvas.height = this.height
+      ctx.drawImage(img, 0, 0)
+    }
+  }
+
+  render() {
+    return (
+      <div style={{ outline: '1px solid red'}}>
+        <img ref="image" onLoad={this.onImageLoad} src={this.props.src} alt="" style={{ display: 'none'}} />
+        <canvas ref="canvas" width={this.width} height={this.height} />
+      </div>
+    )
+  }
+}

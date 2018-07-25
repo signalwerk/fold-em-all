@@ -1,3 +1,6 @@
+import React from 'react'
+import { Image, CodeNode, CanvasImage } from './components'
+
 const MarkHotkey = options => {
   const { type, key } = options
   return {
@@ -24,9 +27,29 @@ const BlockHotkey = options => {
   }
 }
 
+export const NodeSwitch = props => {
+  const { attributes, children, isFocused, node } = props
+  const src = node.type === 'image'
+    ? node.data.get('src')
+    : undefined
 
+  return {
+    code: <CodeNode {...props} />,
+    title: <h1>{children}</h1>,
+    image: <CanvasImage src={src} selected={isFocused} {...attributes} />
+  }[node.type] || <p {...props} />
+}
 
-export default [
+export const MarkSwitch = props => {
+  const { children, mark } = props
+
+  return {
+    bold: <strong>{children}</strong>,
+    negative: <span className="mark-negative">{children}</span>,
+  }[mark.type] || children
+}
+
+export const hotkeys = [
   MarkHotkey({ key: 'b', type: 'bold' }),
   MarkHotkey({ key: 'n', type: 'negative' }),
   BlockHotkey({ key: 'c', type: 'code' }),

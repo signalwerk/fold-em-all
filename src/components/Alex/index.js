@@ -3,9 +3,9 @@ import { Editor } from 'slate-react'
 
 import './index.css'
 import initialValue from './initialValue'
-import { Toolbar, Button, Icon, Image, CodeNode } from './components'
+import { Toolbar, Button, Icon } from './components'
 
-import hotkeys from './hotkeys'
+import { hotkeys, NodeSwitch, MarkSwitch } from './hotkeys'
 
 function insertImage(change, src, target) {
   if (target) {
@@ -63,35 +63,6 @@ export default class Alex extends Component {
     )
   }
 
-  renderNode = props => {
-    const { attributes, node, isFocused } = props
-
-    switch (node.type) {
-      case 'code': {
-        return <CodeNode {...props} />
-      }
-      case 'title': {
-        return <h1>{props.children}</h1>
-      }
-      case 'image': {
-        const src = props.node.data.get('src')
-        return <Image src={src} selected={isFocused} {...attributes} />
-      }
-      default:
-        break
-    }
-  }
-
+  renderNode = props => <NodeSwitch {...props} />
   renderMark = props => <MarkSwitch {...props} />
-}
-
-const MarkSwitch = props => {
-  switch (props.mark.type) {
-    case 'bold':
-      return <strong>{props.children}</strong>
-    case 'negative':
-      return <span className="mark-negative">{props.children}</span>
-    default:
-      break
-  }
 }

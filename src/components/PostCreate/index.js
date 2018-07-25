@@ -48,7 +48,7 @@ class PostCreate extends Component {
 
   handlePost = async e => {
     e.preventDefault()
-    const { title, text, isPublished, sections } = this.state.event
+    const { title, isPublished, sections } = this.state.event
     await this.props.createPostMutation({
       variables: {
         isPublished,

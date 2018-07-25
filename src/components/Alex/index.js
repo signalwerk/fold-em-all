@@ -12,6 +12,14 @@ export default class Alex extends Component {
       {
         value: value2,
         active: false,
+      },
+      {
+        value: value2,
+        active: false,
+      },
+      {
+        value: value2,
+        active: false,
       }
     ]
   }
@@ -27,15 +35,20 @@ export default class Alex extends Component {
     }))
   }
 
+  getSectionActiveClass = pred =>
+    `Post__section${pred ? ' Post__section--active' : ''}`
+
   render() {
     return (
-      <Fragment >
+      <div className="Post__wrapper" >
         {this.state.sections.map((section, index) => (
-          <section onClick={this.setActiveSection(index)}>
+          <section
+            className={this.getSectionActiveClass(section.active)}
+            onClick={this.setActiveSection(index)}>
             <Editor {...section} />
           </section>
         ))}
-      </Fragment >
+      </div>
     )
   }
 }

@@ -78,6 +78,7 @@ export default class Editor extends Component {
         { icon: 'title', action: this.toggleBlock(toggleTitle) },
         { icon: 'code', action: this.toggleBlock(toggleCode) },
         { icon: 'image', action: this.onClickImage },
+        { icon: 'spacer', action: undefined },
         { icon: 'format_italic', action: this.toggleMark('italic') },
         { icon: 'invert_colors', action: this.toggleMark('negative') },
       ]} />

@@ -1,6 +1,7 @@
 import React from 'react'
 import { CodeNode } from './components'
 import Image from './components/Image'
+import Title from './components/Title'
 
 const MarkHotkey = options => {
   const { type, key } = options
@@ -36,7 +37,7 @@ export const NodeSwitch = props => {
 
   return {
     code: <CodeNode {...props} />,
-    heading: <h1>{children}</h1>,
+    heading: <Title>{children}</Title>,
     image: <Image src={src} selected={isFocused} {...attributes} />
   }[node.type] || <p>{children}</p>
 }

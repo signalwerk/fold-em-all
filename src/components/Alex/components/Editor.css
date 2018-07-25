@@ -1,33 +1,81 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
-.Editor {
-  color: inherit;
+.Post__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+.Post__section {
+  flex: 0 0 50%;
+  height: 30rem;
+}
+
+.Post__section:first-of-type {
+  margin-left: 50%;
+}
+
+.Post__section:hover {
+  background-color: #ddf;
 }
 
 
 .Editor__wrapper {
-  color: #ddd;
-}
-
-.Editor__wrapper:hover {
-  background-color: #ddf;
-}
-
-.Editor__wrapper--active:hover {
-  background-color: white;
+  z-index: 1;
+  position: relative;
+  height: 100%;
 }
 
 .Editor__wrapper--active {
-  background-color: white;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  margin: 1em 0 0;
-  border-color: red;
   color: black;
 }
 
+.Editor {
+  z-index: 1;
+  background-color: white;
+  position: relative;
+  height: 100%;
+  color: inherit;
+}
+
+.Editor:hover {
+  background-color: #aaf;
+}
+
+.Toolbar {
+  position: absolute;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 100%;
+  transform: translateX(-100%);
+  transition: transform 200ms ease;
+}
+
+.Toolbar__spacer {
+  flex: 1 0 auto;
+}
+
+.Post__section--active .Toolbar {
+  transform: translateX(0);
+}
+
+
+.Post__section:nth-of-type(2n) .Toolbar {
+  left: unset;
+  right: 100%;
+  transform: translateX(100%);
+}
+
+.Post__section:nth-of-type(2n).Post__section--active .Toolbar {
+  transform: translateX(0);
+}
+
+
 code {
-  display: block;
+  display: inline-block;
   color: white;
   background-color: black;
   font: inherit;

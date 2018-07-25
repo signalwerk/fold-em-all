@@ -1,14 +1,15 @@
-import React, { Component, Fragment } from 'react'
-import {
-  Editor,
-} from 'slate-react'
+import { Editor, getEventRange, getEventTransfer } from 'slate-react'
+import { Block, Value } from 'slate'
+import { LAST_CHILD_TYPE_INVALID } from 'slate-schema-violations'
 
+import React, { Component, Fragment } from 'react'
+import isUrl from 'is-url'
 import initialValue from './initialValue'
 import './index.css'
 import { hotkeys, NodeSwitch, MarkSwitch } from './hotkeys'
-import { insertImage,  toggleTitle,  toggleCode } from './changes'
+import { insertImage, toggleTitle, toggleCode } from './changes'
+import { isImage } from './helpers'
 import Toolbar from './components/Toolbar'
-
 
 export default class Alex extends Component {
   state = {
@@ -19,11 +20,37 @@ export default class Alex extends Component {
     this.setState({ value })
   }
 
-  onClickTitle = event => {
-    event.preventDefault()
-    const change = this.state.value.change().call(toggleTitle)
-    this.onChange(change)
+  onDropOrPaste = (event, change, editor) => {
+    const target = getEventRange(event, change.value)
+    if (!target && event.type == 'drop') return
+
+    const transfer = getEventTransfer(event)
+    const { type, text, files } = transfer
+
+    if (type === 'files') {
+      for (const file of files) {
+        const reader = new FileReader()
+        const [mime] = file.type.split('/')
+        if (mime != 'image') continue
+
+        reader.addEventListener('load', () => {
+          editor.change(c => {
+            c.call(insertImage, reader.result, target)
+          })
+        })
+
+        reader.readAsDataURL(file)
+      }
+    }
+
+    if (type === 'text') {
+      if (!isUrl(text)) return
+      if (!isImage(text)) return
+      change.call(insertImage, text, target)
+    }
   }
+
+
 
   onClickImage = event => {
     event.preventDefault()
@@ -35,15 +62,15 @@ export default class Alex extends Component {
     this.onChange(change)
   }
 
-
-  onClickCode = event => {
+  onToggleBlock = callback => event => {
     event.preventDefault()
-    const change = this.state.value.change().call(toggleCode)
+    const change = this.state.value.change().call(callback)
     this.onChange(change)
   }
-  onClickInvert = event => {
+
+  onToggleMark = type => event => {
     event.preventDefault()
-    const change = this.state.value.change().toggleMark('negative')
+    const change = this.state.value.change().toggleMark(type)
     this.onChange(change)
   }
 
@@ -56,27 +83,23 @@ export default class Alex extends Component {
         <Toolbar actions={[
           {
             icon: 'title',
-            action: this.onClickTitle
+            action: this.onToggleBlock(toggleTitle)
           },
           {
             icon: 'code',
-            action: this.onClickCode
+            action: this.onToggleBlock(toggleCode)
           },
           {
             icon: 'image',
             action: this.onClickImage
           },
           {
-            icon: 'separator',
-            action: undefined
-          },
-          {
             icon: 'format_italic',
-            action: this.onClickItalic
+            action: this.onToggleMark('italic')
           },
           {
             icon: 'invert_colors',
-            action: this.onClickInvert
+            action: this.onToggleMark('negative')
           },
         ]} />
         <Editor
@@ -86,6 +109,8 @@ export default class Alex extends Component {
           value={this.state.value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
+          onDrop={this.onDropOrPaste}
+          onPaste={this.onDropOrPaste}
           renderNode={this.renderNode}
           renderMark={this.renderMark} />
       </Fragment>

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image, CodeNode, CanvasImage } from './components'
+import { CodeNode } from './components'
+import Image from './components/Image'
 
 const MarkHotkey = options => {
   const { type, key } = options

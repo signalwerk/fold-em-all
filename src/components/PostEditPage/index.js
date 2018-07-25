@@ -42,7 +42,7 @@ class PostEditPage extends Component {
         <PostEdit
           id={finalData.id}
           title={finalData.title}
-          text={finalData.text}
+          sections={finalData.sections}
           isPublished={finalData.isPublished}
           onChange={e =>
             this.setState({
@@ -72,13 +72,13 @@ class PostEditPage extends Component {
     this.props.history.replace('/posts')
   }
 
-  updatePost = async ({ id, isPublished, title, text }) => {
+  updatePost = async ({ id, isPublished, title, sections }) => {
     await this.props.updatePost({
       variables: {
         id,
         isPublished,
         title,
-        text,
+        sections,
       },
     })
     this.props.history.replace('/posts')
@@ -91,7 +91,7 @@ const EVENT_QUERY = gql`
       id
       isPublished
       title
-      text
+      sections
     }
   }
 `
@@ -101,13 +101,19 @@ const UPDATE_MUTATION = gql`
     $id: ID!
     $isPublished: Boolean!
     $title: String!
-    $text: String!
+    $sections: [Json!]
   ) {
-    updatePost(id: $id, isPublished: $isPublished, title: $title, text: $text) {
+    updatePost(
+      id: $id
+      isPublished: $isPublished
+      title: $title
+      text: $text
+      sections: $sections
+    ) {
       id
       isPublished
       title
-      text
+      sections
     }
   }
 `

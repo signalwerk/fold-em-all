@@ -4,7 +4,8 @@ type Post {
   updatedAt: DateTime!
   isPublished: Boolean! @default(value: "false")
   title: String!
-  text: String!
+  text: String
+  sections: [Json!]
   author: User!
 }
 

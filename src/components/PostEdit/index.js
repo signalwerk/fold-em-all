@@ -8,8 +8,8 @@ class PostEdit extends Component {
   state = {
     id: null,
     title: this.props.title || '',
-    text: this.props.text || '',
     isPublished: this.props.isPublished || false,
+    sections: this.props.sections || [{}, {}, {}, {}, {}, {}, {}, {}],
   }
   deletePost = async id => {
     await this.props.deletePost({
@@ -38,16 +38,22 @@ class PostEdit extends Component {
                 type="text"
                 value={this.props.title}
               />
+              json1:
               <textarea
                 autoFocus
                 className="textarea"
                 cols={50}
-                onChange={e => this.props.onChange({ text: e.target.value })}
-                placeholder="Text"
+                onChange={e => {
+                  let sections = [...this.props.sections]
+                  console.log('sections', sections)
+                  sections[0] = JSON.parse(e.target.value)
+                  console.log('sections', sections)
+                  this.props.onChange({ sections })
+                }}
+                placeholder="JSON"
                 rows={8}
-                value={this.props.text}
+                value={JSON.stringify(this.props.sections[0], undefined, 2)}
               />
-
               <div>
                 <input
                   type="checkbox"
@@ -60,7 +66,6 @@ class PostEdit extends Component {
                 />
                 Post is isPublished
               </div>
-
               <div>{this.props.children}</div>
             </div>
           </div>

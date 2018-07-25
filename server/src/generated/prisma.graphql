@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/public-shypiper-943/my-app/dev
-# timestamp: Tue Jul 24 2018 14:03:26 GMT+0200 (CEST)
+# timestamp: Wed Jul 25 2018 15:34:24 GMT+0200 (CEST)
 
 type AggregatePost {
   count: Int!
@@ -15,6 +15,9 @@ type BatchPayload {
 }
 
 scalar DateTime
+
+"""Raw JSON value"""
+scalar Json
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -70,7 +73,8 @@ type Post implements Node {
   updatedAt: DateTime!
   isPublished: Boolean!
   title: String!
-  text: String!
+  text: String
+  sections: [Json!]!
   author(where: UserWhereInput): User!
 }
 
@@ -87,7 +91,8 @@ type PostConnection {
 input PostCreateInput {
   isPublished: Boolean
   title: String!
-  text: String!
+  text: String
+  sections: PostCreatesectionsInput
   author: UserCreateOneWithoutPostsInput!
 }
 
@@ -96,10 +101,15 @@ input PostCreateManyWithoutAuthorInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input PostCreatesectionsInput {
+  set: [Json!]
+}
+
 input PostCreateWithoutAuthorInput {
   isPublished: Boolean
   title: String!
-  text: String!
+  text: String
+  sections: PostCreatesectionsInput
 }
 
 """An edge in a connection."""
@@ -132,7 +142,8 @@ type PostPreviousValues {
   updatedAt: DateTime!
   isPublished: Boolean!
   title: String!
-  text: String!
+  text: String
+  sections: [Json!]!
 }
 
 type PostSubscriptionPayload {
@@ -178,6 +189,7 @@ input PostUpdateInput {
   isPublished: Boolean
   title: String
   text: String
+  sections: PostUpdatesectionsInput
   author: UserUpdateOneWithoutPostsInput
 }
 
@@ -190,10 +202,15 @@ input PostUpdateManyWithoutAuthorInput {
   upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
 }
 
+input PostUpdatesectionsInput {
+  set: [Json!]
+}
+
 input PostUpdateWithoutAuthorDataInput {
   isPublished: Boolean
   title: String
   text: String
+  sections: PostUpdatesectionsInput
 }
 
 input PostUpdateWithWhereUniqueWithoutAuthorInput {

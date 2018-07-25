@@ -8,8 +8,8 @@ class PostCreate extends Component {
   state = {
     post: {
       title: '',
-      text: '',
       isPublished: true,
+      sections: [{}, {}, {}, {}, {}, {}, {}, {}],
     },
   }
 
@@ -20,7 +20,7 @@ class PostCreate extends Component {
 
         <PostEdit
           title={this.state.post.title}
-          text={this.state.post.text}
+          sections={this.state.post.sections}
           isPublished={this.state.post.isPublished}
           handlePost={this.handlePost}
           onChange={e =>
@@ -36,7 +36,7 @@ class PostCreate extends Component {
             &nbsp; &nbsp; &nbsp;
             <input
               className={`button`}
-              disabled={!this.state.post.text || !this.state.post.title}
+              disabled={!this.state.post.title}
               type="submit"
               value="erstellen"
             />
@@ -48,12 +48,12 @@ class PostCreate extends Component {
 
   handlePost = async e => {
     e.preventDefault()
-    const { title, text, isPublished } = this.state.event
+    const { title, text, isPublished, sections } = this.state.event
     await this.props.createPostMutation({
       variables: {
         isPublished,
         title,
-        text,
+        sections,
       },
     })
     this.props.history.replace('/')
@@ -64,13 +64,13 @@ const POST_CREATE_MUTATION = gql`
   mutation createPostMutation(
     $isPublished: Boolean!
     $title: String!
-    $text: String!
+    $sections: [Json!]
   ) {
-    createPost(isPublished: $isPublished, title: $title, text: $text) {
+    createPost(isPublished: $isPublished, title: $title, sections: $sections) {
       id
       isPublished
       title
-      text
+      sections
     }
   }
 `

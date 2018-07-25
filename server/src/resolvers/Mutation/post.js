@@ -1,14 +1,14 @@
 const { getUserId } = require('../../utils')
 
 const post = {
-  async createPost(parent, { title, text, isPublished }, ctx, info) {
+  async createPost(parent, { title, isPublished, sections }, ctx, info) {
     const userId = getUserId(ctx)
     return ctx.db.mutation.createPost(
       {
         data: {
           title,
-          text,
           isPublished,
+          sections: { set: sections },
           author: {
             connect: { id: userId },
           },
@@ -18,7 +18,7 @@ const post = {
     )
   },
 
-  async updatePost(parent, { id, isPublished, title, text}, ctx, info) {
+  async updatePost(parent, { id, isPublished, title, sections}, ctx, info) {
     const userId = getUserId(ctx)
     const eventExists = await ctx.db.exists.Post({
       id,
@@ -34,32 +34,13 @@ const post = {
         data: {
           isPublished,
           title,
-          text,
+          sections: { set: sections },
         },
       },
       info,
     )
   },
 
-  //
-  // async publish(parent, { id }, ctx, info) {
-  //   const userId = getUserId(ctx)
-  //   const postExists = await ctx.db.exists.Post({
-  //     id,
-  //     author: { id: userId },
-  //   })
-  //   if (!postExists) {
-  //     throw new Error(`Post not found or you're not the author`)
-  //   }
-  //
-  //   return ctx.db.mutation.updatePost(
-  //     {
-  //       where: { id },
-  //       data: { isPublished: true },
-  //     },
-  //     info,
-  //   )
-  // },
 
   async deletePost(parent, { id }, ctx, info) {
     const userId = getUserId(ctx)

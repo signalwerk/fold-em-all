@@ -26,9 +26,16 @@ export default class Alex extends Component {
 
   setActiveSection = index => event => {
     const { sections } = this.state
-
     sections.forEach((s, i) => s.active = index === i)
+    this.setState(state => ({
+      ...state,
+      sections
+    }))
+  }
 
+  setInactive = index => event => {
+    const { sections } = this.state
+    sections.forEach(s => s.active = false)
     this.setState(state => ({
       ...state,
       sections
@@ -45,7 +52,9 @@ export default class Alex extends Component {
           <section
             className={this.getSectionActiveClass(section.active)}
             onClick={this.setActiveSection(index)}>
-            <Editor {...section} />
+            <Editor
+              {...section}
+              onDoneCallback={this.setInactive(index)} />
           </section>
         ))}
       </div>

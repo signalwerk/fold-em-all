@@ -3,8 +3,6 @@
 .Post__wrapper {
   display: flex;
   flex-wrap: wrap;
-  max-width: 80vw;
-  margin: 0 auto;
 }
 
 .Post__section {
@@ -79,7 +77,22 @@
   display: block;
   max-width: 100%;
   max-height: 20em;
-  filter: grayscale(100%) contrast(256%) brightness(100%);
+  filter: grayscale(100%) brightness(90%) contrast(256%);
+}
+
+.Image__wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.Image__overlay {
+  /* position: absolute;
+  top: 0;right: 0;bottom: 0;left: 0;
+  background-image:
+    linear-gradient(white 1px, transparent 1px),
+    linear-gradient(90deg, white 1px, transparent 1px);
+  background-size: 2px 2px; */
 }
 
 code {

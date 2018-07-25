@@ -74,6 +74,10 @@ export default class Editor extends Component {
     this.onChange(change)
   }
 
+  onDoneClicked = event => {
+    this.props.onDoneCallback()
+  }
+
   renderNode = props => <NodeSwitch {...props} />
   renderMark = props => <MarkSwitch {...props} />
 
@@ -86,6 +90,8 @@ export default class Editor extends Component {
         { icon: 'spacer', action: undefined },
         { icon: 'format_italic', action: this.toggleMark('italic') },
         { icon: 'invert_colors', action: this.toggleMark('negative') },
+        { icon: 'spacer', action: undefined },
+        { icon: 'done', action: this.onDoneClicked },
       ]} />
     )
   }

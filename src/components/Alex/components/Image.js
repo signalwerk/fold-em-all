@@ -11,5 +11,6 @@ const Image = styled('img')`
 export default ({ src }) => (
   <div className="Image__wrapper">
     <Image  src={src} alt="" className="Image"/>
+    <div className="Image__overlay"></div>
   </div>
 )

@@ -35,7 +35,7 @@ export const NodeSwitch = props => {
 
   return {
     code: <CodeNode {...props} />,
-    title: <h1>{children}</h1>,
+    heading: <h1>{children}</h1>,
     image: <Image src={src} selected={isFocused} {...attributes} />
   }[node.type] || <p {...props} />
 }
@@ -44,14 +44,14 @@ export const MarkSwitch = props => {
   const { children, mark } = props
 
   return {
-    bold: <strong>{children}</strong>,
+    italic: <em>{children}</em>,
     negative: <span className="mark-negative">{children}</span>,
   }[mark.type] || children
 }
 
 export const hotkeys = [
-  MarkHotkey({ key: 'b', type: 'bold' }),
+  MarkHotkey({ key: 'i', type: 'italic' }),
   MarkHotkey({ key: 'n', type: 'negative' }),
   BlockHotkey({ key: 'c', type: 'code' }),
-  BlockHotkey({ key: 't', type: 'title' }),
+  BlockHotkey({ key: 'h', type: 'heading' }),
 ]

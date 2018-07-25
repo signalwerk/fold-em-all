@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Editor from './components/Editor'
-import { value1, value2, valueImage } from './initialValue'
+import { value1, valueText, valueImage } from './initialValue'
 
 export default class Alex extends Component {
   state = {
@@ -10,7 +10,7 @@ export default class Alex extends Component {
         active: false,
       },
       {
-        value: value2,
+        value: valueText,
         active: false,
       },
       {
@@ -18,7 +18,7 @@ export default class Alex extends Component {
         active: false,
       },
       {
-        value: value2,
+        value: valueText,
         active: false,
       }
     ]

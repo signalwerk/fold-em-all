@@ -5,11 +5,15 @@ import Icon from './Icon'
 export default ({ actions }) => {
   return (
     <div className="Toolbar">
-      {actions.map(({ icon, action}) => icon === 'spacer'
+      {actions.map(({ icon, action }, index) => icon === 'spacer'
         ? (
-          <div className="Toolbar__spacer"></div>
+          <div
+            key={`${index}:${icon}`}
+            className="Toolbar__spacer"></div>
         ) : (
-          <Button key={icon} onMouseDown={action}>
+          <Button
+            key={`${index}:${icon}`}
+            onMouseDown={action}>
             <Icon>{icon}</Icon>
           </Button>
         )

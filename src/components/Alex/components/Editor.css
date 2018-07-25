@@ -1,5 +1,7 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
+/*———————————————————————————————————————————————————————————  POST  —————————*/
+
 .Post__wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -19,6 +21,8 @@
 }
 
 
+/*—————————————————————————————————————————————————————————  EDITOR  —————————*/
+
 .Editor__wrapper {
   z-index: 1;
   position: relative;
@@ -36,12 +40,14 @@
   height: 100%;
   width: 100%;
   color: inherit;
-  overflow-y: scroll;
 }
 
 .Editor:hover {
   background-color: #aaf;
 }
+
+
+/*————————————————————————————————————————————————————————  TOOLBAR  —————————*/
 
 .Toolbar {
   position: absolute;
@@ -62,7 +68,6 @@
   transform: translateX(0);
 }
 
-
 .Post__section:nth-of-type(2n) .Toolbar {
   left: unset;
   right: 100%;
@@ -72,6 +77,8 @@
 .Post__section:nth-of-type(2n).Post__section--active .Toolbar {
   transform: translateX(0);
 }
+
+/*——————————————————————————————————————————————————————————  IMAGE  —————————*/
 
 .Image {
   display: block;
@@ -90,10 +97,13 @@
   /* position: absolute;
   top: 0;right: 0;bottom: 0;left: 0;
   background-image:
-    linear-gradient(white 1px, transparent 1px),
-    linear-gradient(90deg, white 1px, transparent 1px);
+  linear-gradient(white 1px, transparent 1px),
+  linear-gradient(90deg, white 1px, transparent 1px);
   background-size: 2px 2px; */
 }
+
+
+/*—————————————————————————————————————————————————————————  BLOCKS  —————————*/
 
 code {
   display: inline-block;
@@ -102,6 +112,9 @@ code {
   font-family: monospace;
   width: 100%;
 }
+
+
+/*——————————————————————————————————————————————————————————  MARKS  —————————*/
 
 .mark-negative {
   display: inline-block;
@@ -112,8 +125,3 @@ code {
   text-align: center;
   padding: 0 0.2em;
 }
-
-canvas {
-  width: 100%;
-}
-

@@ -1,4 +1,5 @@
 import { Editor as SlateEditor, getEventRange, getEventTransfer } from 'slate-react'
+import { Value } from 'slate'
 import SoftBreak from 'slate-soft-break'
 import React, { Component } from 'react'
 import isUrl from 'is-url'
@@ -17,7 +18,7 @@ const plugins = [
 
 export default class Editor extends Component {
   state = {
-    value: this.props.value,
+    value: Value.fromJSON(this.props.value),
     active: false
   }
 
@@ -82,7 +83,7 @@ export default class Editor extends Component {
   }
 
   onDoneClicked = event => {
-    this.props.onDoneCallback()
+    this.props.onDone(this.state.value.toJSON())
     this.setState({
       active: false
     })
@@ -107,6 +108,7 @@ export default class Editor extends Component {
   }
 
   renderEditor = () => {
+
     return (
       <SlateEditor
         className="Editor"

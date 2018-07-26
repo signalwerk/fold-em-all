@@ -12,6 +12,7 @@ export default ({ actions }) => {
             className="Toolbar__spacer"></div>
         ) : (
           <Button
+            className="Toolbar__button"
             key={`${index}:${icon}`}
             onMouseDown={action}>
             <Icon>{icon}</Icon>

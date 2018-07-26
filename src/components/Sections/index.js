@@ -1,38 +1,17 @@
 import React, { Component } from 'react'
-import Editor from './components/Editor'
-import { value1, valueText, valueImage } from './initialValue'
+import * as R from 'ramda'
+import Editor from '../Alex/components/Editor'
 
-window.bla = JSON.stringify(value1)
+const pickValues = R.map(R.prop('value'))
 
-
-export default class Alex extends Component {
-  state = {
-    sections: [
-      {
-        value: value1,
-        active: false,
-      },
-      {
-        value: valueImage,
-        active: false,
-      },
-      {
-        value: valueText,
-        active: false,
-      },
-      {
-        value: valueText,
-        active: false,
-      },
-      {
-        value: valueImage,
-        active: false,
-      },
-      {
-        value: valueText,
-        active: false,
-      }
-    ]
+export default class Sections extends Component {
+  constructor(props) {
+    super(props)
+    const sections = props.sections.map(section => ({
+      value: section,
+      active: false
+    }))
+    this.state = { sections }
   }
 
   setActiveSection = index => event => {
@@ -44,10 +23,17 @@ export default class Alex extends Component {
     }))
   }
 
-  setInactive = index => event => {
+  setAllSectionsInactive = event => {
     const { sections } = this.state
     sections.forEach(s => s.active = false)
     this.setState({ sections })
+  }
+
+  handleDoneClicked = index => json => {
+    this.setAllSectionsInactive()
+    const resultSections = pickValues(this.state.sections)
+    resultSections[index] = json
+    this.props.onSave(resultSections)
   }
 
   getSectionActiveClass = pred =>
@@ -62,7 +48,7 @@ export default class Alex extends Component {
             onClick={this.setActiveSection(index)}>
             <Editor
               {...section}
-              onDoneCallback={this.setInactive(index)} />
+              onDone={this.handleDoneClicked(index)} />
           </section>
         ))}
       </div>

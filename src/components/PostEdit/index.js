@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { graphql, compose } from 'react-apollo'
 import Button from '../Button'
+import Editor from '../Alex/components/Editor'
+import Sections from '../Sections'
 
 class PostEdit extends Component {
   state = {
@@ -38,22 +40,13 @@ class PostEdit extends Component {
                 type="text"
                 value={this.props.title}
               />
-              json1:
-              <textarea
-                autoFocus
-                className="textarea"
-                cols={50}
-                onChange={e => {
-                  let sections = [...this.props.sections]
-                  console.log('sections', sections)
-                  sections[0] = JSON.parse(e.target.value)
-                  console.log('sections', sections)
+
+              <Sections
+                sections={this.props.sections}
+                onSave={sections => {
                   this.props.onChange({ sections })
-                }}
-                placeholder="JSON"
-                rows={8}
-                value={JSON.stringify(this.props.sections[0], undefined, 2)}
-              />
+                }} />
+
               <div>
                 <input
                   type="checkbox"

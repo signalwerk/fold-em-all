@@ -31,6 +31,7 @@
     "image-extensions": "^1.1.0",
     "immutable": "^3.8.2",
     "is-url": "^1.2.4",
+    "ramda": "^0.25.0",
     "react": "^16.4.1",
     "react-apollo": "2.1.9",
     "react-dom": "^16.4.1",

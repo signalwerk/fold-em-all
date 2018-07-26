@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as R from 'ramda'
-import Editor from '../Alex/components/Editor'
+import Editor from '../Editor'
 
 const pickValues = R.map(R.prop('value'))
 

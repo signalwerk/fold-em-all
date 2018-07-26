@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { gql } from 'apollo-boost'
 import { graphql, compose } from 'react-apollo'
 import Button from '../Button'
-import Editor from '../Alex/components/Editor'
 import Sections from '../Sections'
 
 class PostEdit extends Component {

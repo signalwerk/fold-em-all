@@ -1,34 +1,26 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
-/*———————————————————————————————————————————————————————————  POST  —————————*/
 
-.Post__wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.Post__section {
-  flex: 0 0 50%;
-  height: 30rem;
-}
-
-.Post__section:first-of-type {
-  margin-left: 50%;
-}
-
-.Post__section:hover {
-  background-color: #ddf;
-}
 
 
 /*—————————————————————————————————————————————————————————  EDITOR  —————————*/
 
 .Editor__wrapper {
   position: relative;
-  height: 100%;
+  height: 297px;
+  width: 210px;
 }
 
 .Editor__wrapper--active {
+  color: black;
+}
+
+.Editor__wrapper--left {
+  color: black;
+  float: right;
+}
+
+.Editor__wrapper--right {
   color: black;
 }
 

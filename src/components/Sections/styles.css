@@ -1,0 +1,18 @@
+/*———————————————————————————————————————————————————————————  POST  —————————*/
+
+.Post__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Post__section {
+  flex: 0 0 50%;
+}
+
+.Post__section:first-of-type {
+  margin-left: 50%;
+}
+
+.Post__section:hover {
+  background-color: #ddf;
+}

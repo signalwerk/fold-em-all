@@ -4,6 +4,7 @@ import Editor from '../Editor'
 
 const pickValues = R.map(R.prop('value'))
 
+
 export default class Sections extends Component {
   constructor(props) {
     super(props)
@@ -16,7 +17,9 @@ export default class Sections extends Component {
 
   setActiveSection = index => event => {
     const { sections } = this.state
+
     sections.forEach((s, i) => s.active = index === i)
+
     this.setState(state => ({
       ...state,
       sections

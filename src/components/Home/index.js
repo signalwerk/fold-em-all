@@ -25,7 +25,6 @@ class Home extends Component {
 
     return (
       <Fragment>
-        <h1>Posts – sh</h1>
         <PostTeasers posts={this.props.postsQuery.posts} />
       </Fragment>
     )

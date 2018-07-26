@@ -39,9 +39,19 @@
 
 /*————————————————————————————————————————————————————————  TOOLBAR  —————————*/
 .Toolbar {
-  position: relative;
+  position: absolute;
   display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
+.Editor__wrapper--left .Toolbar {
+  right: 100%;
+}
+.Editor__wrapper--right .Toolbar {
+  left: 100%;
+}
+
 .Toolbar__button {
   background-color: #000;
   color: #fff !important;
@@ -61,11 +71,11 @@
   opacity: 0;
 }
 
-/*
-
 .Toolbar__spacer {
   flex: 1 0 auto;
 }
+/*
+
 
 .Post__section--active .Toolbar {
   transform: translateX(0);

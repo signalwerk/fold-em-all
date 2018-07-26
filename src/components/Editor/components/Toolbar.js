@@ -20,15 +20,6 @@ const ImageButton = ({ icon, action , index }) => (
     <Icon>image</Icon>
   </Button>
 )
-// const ImageInput = ({ icon, action , index }) => (
-//   <Button
-//     className={`Toolbar__button Toolbar__button--image`}
-//     key={`${index}:${icon}`}
-//     onMouseDown={action}>
-//     <input type="file" onChange={action} />
-//     <Icon>image</Icon>
-//   </Button>
-// )
 
 const ToolbarSwitch = props => {
   const { icon, action, index } = props

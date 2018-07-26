@@ -30,6 +30,7 @@
   height: 100%;
   width: 100%;
   color: inherit;
+  overflow: hidden;
 }
 
 .Editor:hover {
@@ -62,13 +63,15 @@
   background-color: #f06;
 }
 
-.Toolbar__button--image input {
-  opacity: 0;
-  position: absolute;
+.Toolbar__button--image {
 }
 
 .Toolbar__button--image input {
+  overflow: hidden;
+  display: block;
   opacity: 0;
+  width: 100%;
+  position: absolute;
 }
 
 .Toolbar__spacer {

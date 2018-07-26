@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as R from 'ramda'
 import Editor from '../Editor'
+import './styles.css'
 
 const pickValues = R.map(R.prop('value'))
 
@@ -51,6 +52,7 @@ export default class Sections extends Component {
             onClick={this.setActiveSection(index)}>
             <Editor
               {...section}
+              index={index}
               onDone={this.handleDoneClicked(index)} />
           </section>
         ))}

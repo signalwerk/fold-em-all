@@ -65,6 +65,9 @@
   position: absolute;
 }
 
+.Toolbar__button--image input {
+  opacity: 0;
+}
 
 /*
 

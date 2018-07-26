@@ -88,10 +88,13 @@ export default class Editor extends Component {
   }
 
   render() {
-    const className = `Editor__wrapper${
-      this.props.active
-        ? ' Editor__wrapper--active'
-        : ''}`
+    const { active } = this.state
+    const { index } = this.props
+
+    const className = [`Editor__wrapper`]
+    .map(s => `${s}${active ? ' Editor__wrapper--active' : ''}`)
+    .map(s => `${s} Editor__wrapper--${index % 2 ? 'left' : 'right'}`)[0]
+
 
     return (
       <div className={className} >

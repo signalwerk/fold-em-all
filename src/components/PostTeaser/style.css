@@ -2,7 +2,7 @@
   display: inline-block;
   width: 210px;
   height: auto;
-  margin-right: 40px;
+  margin:0 40px 30px 0;
 }
 
 .postTeaser--inner {
@@ -72,6 +72,6 @@
   }
 }
 
-.drafty .postTeaser--root h3{
+.drafty .postTeaser--root h3, .posty .postTeaser--root h3{
     display: none;
 }

@@ -15,7 +15,7 @@ export default class Sections extends Component {
     }))
     this.state = {
       cells,
-      sections: [[0], [1, 2], [3, 4, 5, 6], [7]],
+      sections: [[0], [1, 2], [3, 4, 'br', 5, 6], [7]],
       activeSectionIndex: undefined
     }
   }
@@ -49,9 +49,9 @@ export default class Sections extends Component {
 
   getSectionActiveClass = sectionActiveIndex => sectionIndex =>
     `Post__section${
-      sectionIndex === sectionActiveIndex
-        ? ' Post__section--active'
-        : ''}`
+    sectionIndex === sectionActiveIndex
+      ? ' Post__section--active'
+      : ''}`
 
   getCellActiveClass = pred =>
     `Post__cell${pred ? ' Post__cell--active' : ''}`
@@ -66,16 +66,21 @@ export default class Sections extends Component {
             className={getSectionActiveClass(sectionIndex)}
             onClick={this.setActiveSection(sectionIndex)}>
             {
-              section.map(cellIndex => (
-                <div
-                  className={this.getCellActiveClass(cells[cellIndex].active)}
-                  onClick={this.setActiveCell(cellIndex)}>
-                  <Editor
-                    {...cells[cellIndex]}
-                    index={cellIndex}
-                    onDone={this.handleDoneClicked(cellIndex)} />
-                </div>
-              ))
+              section.map(cellIndex => {
+                return cellIndex === 'br'
+                  ? (
+                    <div className="Post__section-break"></div>
+                  ) : (
+                    <div
+                      className={this.getCellActiveClass(cells[cellIndex].active)}
+                      onClick={this.setActiveCell(cellIndex)}>
+                      <Editor
+                        {...cells[cellIndex]}
+                        index={cellIndex}
+                        onDone={this.handleDoneClicked(cellIndex)} />
+                    </div>
+                  )
+              })
             }
           </section>
         ))}

@@ -24,7 +24,7 @@ const BlockHotkey = options => {
   }
 }
 
-export const hotkeys = [
+export default [
   MarkHotkey({ key: 'i', type: 'italic' }),
   MarkHotkey({ key: 'n', type: 'negative' }),
   BlockHotkey({ key: 'c', type: 'code' }),

@@ -2,11 +2,9 @@ import { Editor as SlateEditor, getEventRange, getEventTransfer } from 'slate-re
 import { Value } from 'slate'
 import SoftBreak from 'slate-soft-break'
 import React, { Component } from 'react'
-import isUrl from 'is-url'
-import { hotkeys } from './slate-hotkeys'
+import hotkeys from './slate-hotkeys'
 import { NodeSwitch, MarkSwitch } from './components/switches'
-import { insertImage, toggleTitle, toggleCode } from './slate-changes'
-import { isImage } from './helpers'
+import { toggleTitle, toggleCode } from './slate-changes'
 import Toolbar from './components/Toolbar'
 import './styles.css'
 
@@ -31,44 +29,6 @@ export default class Editor extends Component {
 
   onChange = ({ value }) => {
     this.setState({ value })
-  }
-
-  onDropOrPaste = (event, change, editor) => {
-    const target = getEventRange(event, change.value)
-    if (!target && event.type === 'drop') return
-
-    const transfer = getEventTransfer(event)
-    const { type, text, files } = transfer
-
-    if (type === 'files') {
-      for (const file of files) {
-        const reader = new FileReader()
-        const [mime] = file.type.split('/')
-        if (mime !== 'image') continue
-
-        reader.addEventListener('load', () => {
-          editor.change(c => {
-            c.call(insertImage, reader.result, target)
-          })
-        })
-
-        reader.readAsDataURL(file)
-      }
-    }
-
-    if (type === 'text') {
-      if (!isUrl(text)) return
-      if (!isImage(text)) return
-      change.call(insertImage, text, target)
-    }
-  }
-
-  onClickImage = event => {
-    event.preventDefault()
-    const src = window.prompt('Enter the URL of the image:')
-    if (!src) return
-    const change = this.state.value.change().call(insertImage, src)
-    this.onChange(change)
   }
 
   toggleBlock = callback => event => {
@@ -98,7 +58,7 @@ export default class Editor extends Component {
       <Toolbar actions={[
         { icon: 'title', action: this.toggleBlock(toggleTitle) },
         { icon: 'code', action: this.toggleBlock(toggleCode) },
-        { icon: 'image', action: this.onClickImage },
+        { icon: 'image', action: undefined },
         { icon: 'spacer', action: undefined },
         { icon: 'format_italic', action: this.toggleMark('italic') },
         { icon: 'invert_colors', action: this.toggleMark('negative') },

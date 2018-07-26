@@ -107,7 +107,6 @@ const UPDATE_MUTATION = gql`
       id: $id
       isPublished: $isPublished
       title: $title
-      text: $text
       sections: $sections
     ) {
       id

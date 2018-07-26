@@ -7,7 +7,6 @@ import { hotkeys, NodeSwitch, MarkSwitch } from '../hotkeys'
 import { insertImage, toggleTitle, toggleCode } from '../changes'
 import { isImage } from '../helpers'
 import Toolbar from './Toolbar'
-import './Editor.css'
 
 const plugins = [
   ...hotkeys,

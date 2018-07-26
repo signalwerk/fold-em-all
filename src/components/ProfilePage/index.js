@@ -3,7 +3,7 @@ import PostTeasers from '../PostTeasers'
 import { graphql, compose } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
-class MePage extends Component {
+class ProfilePage extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.location.key !== nextProps.location.key) {
       this.props.mydraftsQuery.refetch()
@@ -32,14 +32,14 @@ class MePage extends Component {
         <div className="flex justify-between items-center">
           <h2>My Posts</h2>
         </div>
-        <PostTeasers posts={this.props.mypostsQuery.mydrafts} />
+        <PostTeasers posts={this.props.mypostsQuery.myposts} />
       </Fragment>
     )
   }
 }
 
-const ME_QUERY = gql`
-  query MeQuery {
+const MYDRAFTS_QUERY = gql`
+  query MyDraftsQuery {
     mydrafts {
       id
       title
@@ -63,19 +63,9 @@ const MYPOSTS_QUERY = gql`
     }
   }
 `
-//
-// export default graphql(ME_QUERY, {
-//   name: 'mydraftsQuery', // name of the injected prop: this.props.feedQuery...
-//   options: {
-//     fetchPolicy: 'network-only',
-//   },
-// })(MePage)
-//
-//
-
 
 export default compose(
-  graphql(ME_QUERY, {
+  graphql(MYDRAFTS_QUERY, {
     name: 'mydraftsQuery', // name of the injected prop: this.props.feedQuery...
     options: {
       fetchPolicy: 'network-only',
@@ -87,4 +77,4 @@ export default compose(
       fetchPolicy: 'network-only',
     },
   }),
-)(MePage)
+)(ProfilePage)

@@ -16,7 +16,7 @@ import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
 import PageNotFound from './PageNotFound'
 import LogoutPage from './LogoutPage'
-import MePage from './MePage'
+import ProfilePage from './ProfilePage'
 import Alex from './Alex'
 import { AUTH_TOKEN } from '../constant'
 import { isTokenExpired } from '../helper/jwtHelper'
@@ -111,7 +111,7 @@ class RootContainer extends Component {
               className="link dim f6 f5-ns dib mr3 black"
               activeClassName="gray"
               exact={true}
-              to="/me"
+              to="/profile"
               title="My Posts"
             >
               My Posts
@@ -161,8 +161,8 @@ class RootContainer extends Component {
           <Route path="/alex" component={Alex} />
           <ProtectedRoute
             token={this.state.token}
-            path="/me"
-            component={MePage}
+            path="/profile"
+            component={ProfilePage}
           />
           <ProtectedRoute
             token={this.state.token}

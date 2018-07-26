@@ -38,6 +38,13 @@ export default class Editor extends Component {
     })
   }
 
+  onBlur = event => {
+    this.props.onDone(this.state.value.toJSON())
+    this.setState({
+      active: false
+    })
+  }
+
   onImageSubmitted = url => {
     const change = this.state.value.change().call(insertImage, url)
     this.onChange(change)
@@ -75,7 +82,6 @@ export default class Editor extends Component {
   }
 
   renderEditor = () => {
-
     return (
       <SlateEditor
         className="Editor"
@@ -86,6 +92,7 @@ export default class Editor extends Component {
         onChange={this.onChange}
         onKeyDown={this.onKeyDown}
         onDrop={this.onDropOrPaste}
+        onBlur={this.onBlur}
         onPaste={this.onDropOrPaste}
         readOnly={!this.state.active}
         renderNode={this.renderNode}

@@ -4,7 +4,7 @@ import SoftBreak from 'slate-soft-break'
 import React, { Component } from 'react'
 import hotkeys from './slate-hotkeys'
 import { NodeSwitch, MarkSwitch } from './components/switches'
-import { toggleTitle, toggleCode } from './slate-changes'
+import { insertImage, toggleTitle, toggleCode } from './slate-changes'
 import Toolbar from './components/Toolbar'
 import './styles.css'
 
@@ -31,6 +31,18 @@ export default class Editor extends Component {
     this.setState({ value })
   }
 
+  onDoneClicked = event => {
+    this.props.onDone(this.state.value.toJSON())
+    this.setState({
+      active: false
+    })
+  }
+
+  onImageSubmitted = url => {
+    const change = this.state.value.change().call(insertImage, url)
+    this.onChange(change)
+  }
+
   toggleBlock = callback => event => {
     event.preventDefault()
     const change = this.state.value.change().call(callback)
@@ -43,12 +55,6 @@ export default class Editor extends Component {
     this.onChange(change)
   }
 
-  onDoneClicked = event => {
-    this.props.onDone(this.state.value.toJSON())
-    this.setState({
-      active: false
-    })
-  }
 
   renderNode = props => <NodeSwitch {...props} />
   renderMark = props => <MarkSwitch {...props} />
@@ -58,7 +64,7 @@ export default class Editor extends Component {
       <Toolbar actions={[
         { icon: 'title', action: this.toggleBlock(toggleTitle) },
         { icon: 'code', action: this.toggleBlock(toggleCode) },
-        { icon: 'image', action: undefined },
+        { icon: 'image', action: this.onImageSubmitted },
         { icon: 'spacer', action: undefined },
         { icon: 'format_italic', action: this.toggleMark('italic') },
         { icon: 'invert_colors', action: this.toggleMark('negative') },
@@ -91,9 +97,10 @@ export default class Editor extends Component {
     const { active } = this.state
     const { index } = this.props
 
-    const className = [`Editor__wrapper`]
-    .map(s => `${s}${active ? ' Editor__wrapper--active' : ''}`)
-    .map(s => `${s} Editor__wrapper--${index % 2 ? 'left' : 'right'}`)[0]
+
+    let className = `Editor__wrapper`
+    className += active ? ' Editor__wrapper--active' : ''
+    className += ` Editor__wrapper--${index % 2 ? 'left' : 'right'}`
 
 
     return (

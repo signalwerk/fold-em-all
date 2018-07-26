@@ -6,7 +6,7 @@ export default class PostTeaser extends Component {
   render() {
     return (
       <Fragment>
-        <article className="postTeaser--root">
+        <article className={`postTeaser--root ${this.props.className ? this.props.className : ''}`}>
           <Link className="postTeaser--link" to={`/post/${this.props.post.id}`}>
             <h1><span>!!!{this.props.post.title}</span></h1>
           </Link>

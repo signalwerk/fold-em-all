@@ -47,3 +47,17 @@
   width: 100%;
   height: 297px;
 }
+
+.drafty .postTeaser--link{
+  background: repeating-linear-gradient(
+  45deg,
+  #e1e1e1,
+  #e1e1e1 10px,
+  #e8e8e8 10px,
+  #e8e8e8 20px
+);
+}
+
+.drafty .postTeaser--root h3{
+    display: none;
+}

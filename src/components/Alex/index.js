@@ -10,6 +10,14 @@ export default class Alex extends Component {
         active: false,
       },
       {
+        value: valueImage,
+        active: false,
+      },
+      {
+        value: valueText,
+        active: false,
+      },
+      {
         value: valueText,
         active: false,
       },
@@ -36,10 +44,7 @@ export default class Alex extends Component {
   setInactive = index => event => {
     const { sections } = this.state
     sections.forEach(s => s.active = false)
-    this.setState(state => ({
-      ...state,
-      sections
-    }))
+    this.setState({ sections })
   }
 
   getSectionActiveClass = pred =>

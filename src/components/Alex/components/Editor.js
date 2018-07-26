@@ -18,6 +18,13 @@ const plugins = [
 export default class Editor extends Component {
   state = {
     value: this.props.value,
+    active: false
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.active !== prevState.active
+      ? { active: nextProps.active }
+      : null
   }
 
   onChange = ({ value }) => {
@@ -76,6 +83,9 @@ export default class Editor extends Component {
 
   onDoneClicked = event => {
     this.props.onDoneCallback()
+    this.setState({
+      active: false
+    })
   }
 
   renderNode = props => <NodeSwitch {...props} />
@@ -98,20 +108,20 @@ export default class Editor extends Component {
 
   renderEditor = () => {
     return (
-        <SlateEditor
-          className="Editor"
-          plugins={plugins}
-          placeholder="Enter some text..."
-          value={this.state.value}
-          autoFocus={false}
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          onDrop={this.onDropOrPaste}
-          onPaste={this.onDropOrPaste}
-          readOnly={!this.props.active}
-          renderNode={this.renderNode}
-          renderMark={this.renderMark} />
-      )
+      <SlateEditor
+        className="Editor"
+        plugins={plugins}
+        placeholder="Enter some text..."
+        value={this.state.value}
+        autoFocus={false}
+        onChange={this.onChange}
+        onKeyDown={this.onKeyDown}
+        onDrop={this.onDropOrPaste}
+        onPaste={this.onDropOrPaste}
+        readOnly={!this.state.active}
+        renderNode={this.renderNode}
+        renderMark={this.renderMark} />
+    )
   }
 
   render() {

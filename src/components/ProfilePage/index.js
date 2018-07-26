@@ -27,7 +27,7 @@ class ProfilePage extends Component {
         <div className="flex justify-between items-center">
           <h2>My Drafts</h2>
         </div>
-        <PostTeasers posts={this.props.mydraftsQuery.mydrafts} />
+        <PostTeasers className="drafty" posts={this.props.mydraftsQuery.mydrafts} />
 
         <div className="flex justify-between items-center">
           <h2>My Posts</h2>

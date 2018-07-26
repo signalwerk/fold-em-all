@@ -1,18 +1,31 @@
-/*———————————————————————————————————————————————————————————  POST  —————————*/
-
 .Post__wrapper {
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .Post__section {
-  flex: 0 0 50%;
+  margin-bottom: 2em;
+  /* outline: 2px solid #f06; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Post__section--active {
+  /* outline: 2px solid dodgerblue; */
 }
 
 .Post__section:first-of-type {
+  justify-content: start;
   margin-left: 50%;
 }
 
+.Post__section:last-of-type {
+  justify-content: end;
+  margin-right: 50%;
+}
+
 .Post__section:hover {
-  background-color: #ddf;
+}
+
+.Post__cell--active {
+  /* outline: 2px solid #f06; */
 }

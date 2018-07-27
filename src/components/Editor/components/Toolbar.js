@@ -29,11 +29,19 @@ const ToolbarSwitch = props => {
   }[icon] || <ToolbarButton icon={icon} action={action} index={index} />
 }
 
-export default ({ actions }) => {
+export default ({ buttons, hasSelection }) => {
+
+  let className = (hasSelection)
+    ? 'Toolbar Toolbar--has-selection'
+    : 'Toolbar'
+
   return (
-    <div className="Toolbar">
-      {actions.map(({ icon, action }, index) =>
-        <ToolbarSwitch icon={icon} action={action} index={index} />
+    <div className={className}>
+      {buttons.map(({ icon, action }, index) =>
+        <ToolbarSwitch
+          icon={icon}
+          action={action}
+          index={index} />
       )}
     </div>
   )

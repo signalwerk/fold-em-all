@@ -67,17 +67,22 @@ export default class Editor extends Component {
   renderMark = props => <MarkSwitch {...props} />
 
   renderToolbar = () => {
+    const  { anchorOffset, focusOffset } = this.state.value.selection
+    const hasSelection = Math.abs(anchorOffset - focusOffset) !== 0
+
     return (
-      <Toolbar actions={[
-        { icon: 'title', action: this.toggleBlock(toggleTitle) },
-        { icon: 'code', action: this.toggleBlock(toggleCode) },
-        { icon: 'image', action: this.onImageSubmitted },
-        { icon: 'spacer', action: undefined },
-        { icon: 'format_italic', action: this.toggleMark('italic') },
-        { icon: 'invert_colors', action: this.toggleMark('negative') },
-        { icon: 'spacer', action: undefined },
-        { icon: 'done', action: this.onDoneClicked },
-      ]} />
+      <Toolbar
+        hasSelection={hasSelection}
+        buttons={[
+          { icon: 'title', action: this.toggleBlock(toggleTitle) },
+          { icon: 'code', action: this.toggleBlock(toggleCode) },
+          { icon: 'image', action: this.onImageSubmitted },
+          { icon: 'spacer', action: undefined },
+          { icon: 'format_italic', action: this.toggleMark('italic') },
+          { icon: 'invert_colors', action: this.toggleMark('negative') },
+          { icon: 'spacer', action: undefined },
+          { icon: 'done', action: this.onDoneClicked },
+        ]} />
     )
   }
 

@@ -38,6 +38,8 @@
   height: 100%;
 }
 
+
+
 .Editor__wrapper--left .Toolbar {
   right: 100%;
 }
@@ -55,8 +57,7 @@
   background-color: #f06;
 }
 
-.Toolbar__button--image {
-}
+
 
 .Toolbar__button--image input {
   overflow: hidden;
@@ -69,6 +70,21 @@
 .Toolbar__spacer {
   flex: 1 0 auto;
 }
+
+
+/*----- FORMAT OPTIONS NOT VISIBLE -----*/
+.Toolbar > .Toolbar__button--format_italic,
+.Toolbar > .Toolbar__button--invert_colors {
+  opacity: 0.1;
+}
+
+/*----- FORMAT OPTIONS VISIBLE -----*/
+.Toolbar--has-selection > .Toolbar__button--format_italic,
+.Toolbar--has-selection > .Toolbar__button--invert_colors {
+  opacity: 1;
+}
+
+
 /*
 
 
@@ -86,6 +102,7 @@
   transform: translateX(0);
 }
 */
+
 /*——————————————————————————————————————————————————————————  IMAGE  —————————*/
 
 .Image {

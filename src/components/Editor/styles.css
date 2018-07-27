@@ -11,8 +11,11 @@
   width: 210px;
 }
 
-.Editor__wrapper ::selection,
 .Editor__wrapper ::selection {
+  background: #f06;
+  color: white;
+}
+.Editor__wrapper ::-moz-selection {
   background: #f06;
   color: white;
 }

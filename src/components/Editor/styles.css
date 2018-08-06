@@ -1,35 +1,33 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
-/*———————————————————————————————————————————————————————————  POST  —————————*/
 
-.Post__wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.Post__section {
-  flex: 0 0 50%;
-  height: 30rem;
-}
-
-.Post__section:first-of-type {
-  margin-left: 50%;
-}
-
-.Post__section:hover {
-  background-color: #ddf;
-}
 
 
 /*—————————————————————————————————————————————————————————  EDITOR  —————————*/
 
 .Editor__wrapper {
   position: relative;
-  height: 100%;
+  height: 297px;
+  width: 210px;
 }
 
+.Editor__wrapper ::selection {
+  background: #f06;
+  color: white;
+}
+.Editor__wrapper ::-moz-selection {
+  background: #f06;
+  color: white;
+}
+
+
 .Editor__wrapper--active {
-  color: black;
+}
+
+.Editor__wrapper--left {
+}
+
+.Editor__wrapper--right {
 }
 
 .Editor {
@@ -38,18 +36,27 @@
   height: 100%;
   width: 100%;
   color: inherit;
-}
-
-.Editor:hover {
-  background-color: #aaf;
+  overflow: hidden;
 }
 
 
 /*————————————————————————————————————————————————————————  TOOLBAR  —————————*/
 .Toolbar {
-  position: relative;
+  position: absolute;
   display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
+
+
+.Editor__wrapper--left .Toolbar {
+  right: 100%;
+}
+.Editor__wrapper--right .Toolbar {
+  left: 100%;
+}
+
 .Toolbar__button {
   background-color: #000;
   color: #fff !important;
@@ -60,11 +67,36 @@
   background-color: #f06;
 }
 
-/*
+
+
+.Toolbar__button--image input {
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  width: 100%;
+  position: absolute;
+}
 
 .Toolbar__spacer {
   flex: 1 0 auto;
 }
+
+
+/*----- FORMAT OPTIONS NOT VISIBLE -----*/
+.Toolbar > .Toolbar__button--format_italic,
+.Toolbar > .Toolbar__button--invert_colors {
+  opacity: 0.1;
+}
+
+/*----- FORMAT OPTIONS VISIBLE -----*/
+.Toolbar--has-selection > .Toolbar__button--format_italic,
+.Toolbar--has-selection > .Toolbar__button--invert_colors {
+  opacity: 1;
+}
+
+
+/*
+
 
 .Post__section--active .Toolbar {
   transform: translateX(0);
@@ -80,6 +112,7 @@
   transform: translateX(0);
 }
 */
+
 /*——————————————————————————————————————————————————————————  IMAGE  —————————*/
 
 .Image {

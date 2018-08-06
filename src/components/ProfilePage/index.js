@@ -22,9 +22,6 @@ class ProfilePage extends Component {
     return (
       <Fragment>
         <div className="flex justify-between items-center">
-          <h1>Overview</h1>
-        </div>
-        <div className="flex justify-between items-center">
           <h2>My Drafts</h2>
         </div>
         <PostTeasers className="drafty" posts={this.props.mydraftsQuery.mydrafts} />
@@ -32,7 +29,7 @@ class ProfilePage extends Component {
         <div className="flex justify-between items-center">
           <h2>My Posts</h2>
         </div>
-        <PostTeasers posts={this.props.mypostsQuery.myposts} />
+        <PostTeasers className="posty" posts={this.props.mypostsQuery.myposts} />
       </Fragment>
     )
   }

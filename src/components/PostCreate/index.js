@@ -3,13 +3,14 @@ import { withRouter, Link } from 'react-router-dom'
 import { graphql } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import PostEdit from '../PostEdit'
+import initialSections from './initialSections'
 
 class PostCreate extends Component {
   state = {
     post: {
       title: '',
       isPublished: true,
-      sections: [{}, {}, {}, {}, {}, {}, {}, {}],
+      sections: initialSections,
     },
   }
 

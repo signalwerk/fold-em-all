@@ -1,0 +1,56 @@
+/*--------------------------------------------------  POST WRAPPER  ----------*/
+
+.Post__wrapper {
+}
+
+/*--------------------------------------------------  POST SECTION  ----------*/
+
+.Post__section {
+  margin-bottom: 2em;
+  /* outline: 2px solid #f06; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Post__section--active {
+  /* outline: 2px solid dodgerblue; */
+}
+
+.Post__section:first-of-type {
+  justify-content: start;
+  margin-left: 50%;
+}
+
+.Post__section:last-of-type {
+  justify-content: end;
+  margin-right: 50%;
+}
+
+.Post__section-break {
+  width: 100%;
+}
+
+/*-----------------------------------------------------  POST CELL  ----------*/
+
+.Post__cell {
+  position: relative;
+}
+
+.Post__cell:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  transition: background-color 150ms ease;
+}
+.Post__cell:hover:after {
+  background-color: rgba(255, 0, 102, 0.5);
+}
+.Post__cell--active:hover:after {
+  background-color: rgba(255, 255, 255, 0);
+}
+

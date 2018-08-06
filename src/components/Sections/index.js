@@ -1,54 +1,87 @@
 import React, { Component } from 'react'
 import * as R from 'ramda'
-import Editor from '../Alex/components/Editor'
+import Editor from '../Editor'
+import './styles.css'
 
 const pickValues = R.map(R.prop('value'))
+
 
 export default class Sections extends Component {
   constructor(props) {
     super(props)
-    const sections = props.sections.map(section => ({
+    const cells = props.sections.map(section => ({
       value: section,
       active: false
     }))
-    this.state = { sections }
+    this.state = {
+      cells,
+      sections: [[0], [1, 2], [3, 4, 'br', 5, 6], [7]],
+      activeSectionIndex: undefined
+    }
   }
 
-  setActiveSection = index => event => {
-    const { sections } = this.state
-    sections.forEach((s, i) => s.active = index === i)
-    this.setState(state => ({
-      ...state,
-      sections
+  setActiveCell = index => event => {
+    const cells = this.state.cells.map((cell, i) => ({
+      ...cell,
+      active: index === i
     }))
+    this.setState({ cells })
   }
 
-  setAllSectionsInactive = event => {
-    const { sections } = this.state
-    sections.forEach(s => s.active = false)
-    this.setState({ sections })
+  setAllCellsInactive = event => {
+    const cells = this.state.cells.map(cell => ({
+      ...cell,
+      active: false
+    }))
+    this.setState({ cells })
+  }
+
+  setActiveSection = activeSectionIndex => event => {
+    this.setState({ activeSectionIndex })
   }
 
   handleDoneClicked = index => json => {
-    this.setAllSectionsInactive()
-    const resultSections = pickValues(this.state.sections)
-    resultSections[index] = json
-    this.props.onSave(resultSections)
+    this.setAllCellsInactive()
+    const resultCells = pickValues(this.state.cells)
+    resultCells[index] = json
+    this.props.onSave(resultCells)
   }
 
-  getSectionActiveClass = pred =>
-    `Post__section${pred ? ' Post__section--active' : ''}`
+  getSectionActiveClass = sectionActiveIndex => sectionIndex =>
+    `Post__section${
+    sectionIndex === sectionActiveIndex
+      ? ' Post__section--active'
+      : ''}`
+
+  getCellActiveClass = pred =>
+    `Post__cell${pred ? ' Post__cell--active' : ''}`
 
   render() {
+    const { sections, activeSectionIndex, cells } = this.state
+    const getSectionActiveClass = this.getSectionActiveClass(activeSectionIndex)
     return (
       <div className="Post__wrapper" >
-        {this.state.sections.map((section, index) => (
+        {sections.map((section, sectionIndex) => (
           <section
-            className={this.getSectionActiveClass(section.active)}
-            onClick={this.setActiveSection(index)}>
-            <Editor
-              {...section}
-              onDone={this.handleDoneClicked(index)} />
+            className={getSectionActiveClass(sectionIndex)}
+            onClick={this.setActiveSection(sectionIndex)}>
+            {
+              section.map(cellIndex => {
+                return cellIndex === 'br'
+                  ? (
+                    <div className="Post__section-break"></div>
+                  ) : (
+                    <div
+                      className={this.getCellActiveClass(cells[cellIndex].active)}
+                      onClick={this.setActiveCell(cellIndex)}>
+                      <Editor
+                        {...cells[cellIndex]}
+                        index={cellIndex}
+                        onDone={this.handleDoneClicked(cellIndex)} />
+                    </div>
+                  )
+              })
+            }
           </section>
         ))}
       </div>
